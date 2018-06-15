@@ -15,7 +15,7 @@ FS.register_helper :download_csv do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_csv' href='#'><i class='fa fa-file-o'></i> CSV</a>");
+      $("div#stanza_buttons").append("<a id='download_csv' download='stanza.csv' href='#'><i class='fa fa-file-o'></i> CSV</a>");
 
       var csv = '';
       var tables = $('body > table');
@@ -52,7 +52,7 @@ FS.register_helper :download_csv do
       }
 
       document.querySelector('#download_csv').addEventListener('click', (e) => {
-        e.target.href = 'data:text/plain;charset=UTF-8,' + (window.btoa ? 'base64,' + btoa(csv) : csv);
+        e.target.href = 'data:text/plain;charset=UTF-8,' + csv;
       });
     });
     </script>
@@ -65,11 +65,11 @@ FS.register_helper :download_json do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_json' href='#'><i class='fa fa-file-o'></i> JSON</a>");
+      $("div#stanza_buttons").append("<a id='download_json' download='stanza.json' href='#'><i class='fa fa-file-o'></i> JSON</a>");
       var json_str = JSON.stringify(#{json}, '', 2);
 
       document.querySelector('#download_json').addEventListener('click', (e) => {
-        e.target.href = 'data:application/json;charset=UTF-8,' + (window.btoa ? 'base64,' + btoa(json_str) : json_str);
+        e.target.href = 'data:application/json;charset=UTF-8,' + json_str;
       });
     });
     </script>
@@ -80,7 +80,7 @@ FS.register_helper :download_svg do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_svg' href='#'><i class='fa fa-file-o'></i> SVG</a>");
+      $("div#stanza_buttons").append("<a id='download_svg' download='stanza.svg' href='#'><i class='fa fa-file-o'></i> SVG</a>");
 
       document.querySelector('#download_svg').addEventListener('click', (e) => {
         var svg = $("svg");
@@ -93,7 +93,7 @@ FS.register_helper :download_svg do
           }
 
           var svgText = svg.wrap('<div>').parent().html();
-          e.target.href = 'data:image/svg+xml;charset=UTF-8,' + (window.btoa ? 'base64,' + btoa(svgText) : svgText);
+          e.target.href = 'data:image/svg+xml;charset=UTF-8,' + svgText;
         } else {
           // TODO...
           console.log("Can't open svg file");
@@ -114,7 +114,7 @@ FS.register_helper :download_image do
 
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_image' href='#'><i class='fa fa-file-o'></i> IMAGE</a>");
+      $("div#stanza_buttons").append("<a id='download_image' download='stanza.png' href='#'><i class='fa fa-file-o'></i> IMAGE</a>");
 
       $("body").append("<div style='display: none;'><canvas id='drawarea'></canvas></div>");
 
