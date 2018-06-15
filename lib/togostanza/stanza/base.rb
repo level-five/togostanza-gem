@@ -15,7 +15,7 @@ FS.register_helper :download_csv do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_csv' download='stanza.csv' href='#'><i class='fa fa-file-o'></i> CSV</a>");
+      $("div#stanza_buttons").append("<a id='download_csv' download='" + #{download_filename} + ".csv' href='#'><i class='fa fa-file-o'></i> CSV</a>");
 
       var csv = '';
       var tables = $('body > table');
@@ -65,7 +65,7 @@ FS.register_helper :download_json do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_json' download='stanza.json' href='#'><i class='fa fa-file-o'></i> JSON</a>");
+      $("div#stanza_buttons").append("<a id='download_json' download='" + #{download_filename} + ".json' href='#'><i class='fa fa-file-o'></i> JSON</a>");
       var json_str = JSON.stringify(#{json}, null, '\t');
 
       document.querySelector('#download_json').addEventListener('click', (e) => {
@@ -80,7 +80,7 @@ FS.register_helper :download_svg do
   <<-HTML.strip_heredoc.html_safe
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_svg' download='stanza.svg' href='#'><i class='fa fa-file-o'></i> SVG</a>");
+      $("div#stanza_buttons").append("<a id='download_svg' download='" + #{download_filename} + ".svg' href='#'><i class='fa fa-file-o'></i> SVG</a>");
 
       document.querySelector('#download_svg').addEventListener('click', (e) => {
         var svg = $("svg");
@@ -114,7 +114,7 @@ FS.register_helper :download_image do
 
     <script>$(function() {
       #{init_download_script}
-      $("div#stanza_buttons").append("<a id='download_image' download='stanza.png' href='#'><i class='fa fa-file-o'></i> IMAGE</a>");
+      $("div#stanza_buttons").append("<a id='download_image' download='" + #{download_filename} + ".png' href='#'><i class='fa fa-file-o'></i> IMAGE</a>");
 
       $("body").append("<div style='display: none;'><canvas id='drawarea'></canvas></div>");
 
@@ -149,6 +149,12 @@ def init_download_script
     if (!$("div#stanza_buttons")[0]) {
       $('body').append("<div id='tool_bar'><div id='stanza_buttons' class='pull-left'></div></div>");
     }
+  HTML
+end
+
+def download_filename
+  <<-HTML.strip_heredoc.html_safe
+    location.pathname.replace(/\\/.*\\//, '') + location.search.replace(/[?&][^=]*?=/g, '_')
   HTML
 end
 
