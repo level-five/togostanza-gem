@@ -66,7 +66,7 @@ FS.register_helper :download_json do
     <script>$(function() {
       #{init_download_script}
       $("div#stanza_buttons").append("<a id='download_json' download='stanza.json' href='#'><i class='fa fa-file-o'></i> JSON</a>");
-      var json_str = JSON.stringify(#{json}, '', 2);
+      var json_str = JSON.stringify(#{json}, null, '\t');
 
       document.querySelector('#download_json').addEventListener('click', (e) => {
         e.target.href = 'data:application/json;charset=UTF-8,' + json_str;
